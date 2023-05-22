@@ -28,7 +28,7 @@ public class ServicioCaminos<T> {
 		int cant = 0;
 		this.guardarArcos();
 		
-		//recorremos los adyasentes del vertice origen obteniendo los caminos a destino
+		//recorremos los adyacentes del vertice origen obteniendo los caminos a destino
 		Iterator<Integer> key = grafo.obtenerAdyacentes(origen);
 		while(key.hasNext()) {
 			Integer adyacentes = key.next();
