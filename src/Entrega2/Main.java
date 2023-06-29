@@ -12,7 +12,6 @@ public class Main {
 		reader.read(g);
 		ServicioTunelesBackTraking s= new ServicioTunelesBackTraking(g);
 		LinkedList<Arco<T>>so = s.tunelesBackTraking();
-		System.out.println(so);
 		for (Arco<T> a:so) {
 			System.out.println(a);
 		}
@@ -22,5 +21,9 @@ public class Main {
 		//}
 		System.out.println(s.sumaMejor);
 		
+		/*
+		ServicioTunelesGreddy s = new ServicioTunelesGreddy(g);
+		s.TunelesGreddy();
+		*/
 	}
 }

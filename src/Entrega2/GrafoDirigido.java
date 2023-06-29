@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 
-	private HashMap<Integer, LinkedList<Arco<T>>> adjacencyList= new HashMap<Integer, LinkedList<Arco<T>>>();
+	protected HashMap<Integer, LinkedList<Arco<T>>> adjacencyList= new HashMap<Integer, LinkedList<Arco<T>>>();
 	private int cantArcos=0;
 	
 	

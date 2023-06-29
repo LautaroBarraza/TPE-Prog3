@@ -1,7 +1,6 @@
 package Entrega2;
 
-
-
+import java.util.Objects;
 
 /*
  * La clase arco representa un arco del grafo. Contiene un vertice origen, un vertice destino y una etiqueta.
@@ -9,6 +8,8 @@ package Entrega2;
  * (Inmutable: una vez creado el arco no es posible cambiarle los valores).
  */
 public class Arco<T> {
+
+
 
 	private int verticeOrigen;
 	private int verticeDestino;
@@ -32,11 +33,20 @@ public class Arco<T> {
 		return etiqueta;
 	}
 
-	@Override
 	public String toString() {
-		return "Arco [verticeOrigen=" + verticeOrigen + ", verticeDestino=" + verticeDestino + ", etiqueta=" + etiqueta
-				+ "]";
-	}
+        return "Tunel [" + verticeOrigen + "-->" + verticeDestino + "-->" + etiqueta
+                + "KM]";
+    }
+	
+	/*public boolean equals(Object obj) {
+		try {
+			Arco<T> a2 = (Arco) obj;
+			return ((a2.getVerticeOrigen()==this.getVerticeDestino() && a2.getVerticeDestino()==this.getVerticeOrigen())&& a2.getEtiqueta().equals(this.getEtiqueta())) || ((a2.getVerticeOrigen()==this.getVerticeOrigen() && a2.getVerticeDestino()==this.getVerticeDestino())&& a2.getEtiqueta().equals(this.getEtiqueta()));
+		}catch(Exception e) {
+			return false;
+		}
+		
+	}*/
 	
 	
 

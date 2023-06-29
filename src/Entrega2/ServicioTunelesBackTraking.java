@@ -11,7 +11,7 @@ public class ServicioTunelesBackTraking<T> {
 	HashMap<Integer, Boolean> estaciones= new HashMap<Integer,Boolean>();
 	Grafo<T> g;
 	Grafo<T> solucionParcial;
-	double sumaMejor=Integer.MAX_VALUE;
+	int sumaMejor=Integer.MAX_VALUE;
 	
 	//constructor
 	public ServicioTunelesBackTraking(Grafo<T> g) {
@@ -39,11 +39,8 @@ public class ServicioTunelesBackTraking<T> {
 		//System.out.println(solucionParcial);
 		if(this.tuneles.isEmpty()) {
 			if(this.isBest(solucionParcial)) {
-				this.solucion.clear();
-				Iterator<Arco<T>> i =solucionParcial.obtenerArcos();
-				while(i.hasNext()){
-					this.solucion.add(i.next());
-				}
+				this.cargarMejorSolucion(solucionParcial);
+				
 			}
 		}else {
 			//sigo recorriendo el backtraking
@@ -57,11 +54,11 @@ public class ServicioTunelesBackTraking<T> {
 			a= this.tuneles.removeFirst();
 			int o= a.getVerticeOrigen();
 			int d= a.getVerticeDestino();
-		
 			solucionParcial.agregarArco(o, d, a.getEtiqueta());
 			this.getTunelesBackTraking(solucionParcial);
 			solucionParcial.borrarArco(o, d);
 			this.tuneles.add(a);
+
 			
 		}
 	}
@@ -75,6 +72,7 @@ public class ServicioTunelesBackTraking<T> {
 			while(i.hasNext()) {
 				suma+= (int) i.next().getEtiqueta();
 			}
+			suma= suma/2;
 			if(suma<this.sumaMejor) {
 				this.sumaMejor=suma;
 				return true;
@@ -135,6 +133,27 @@ public class ServicioTunelesBackTraking<T> {
 			if(!this.tuneles.contains(t)) {
 				this.tuneles.add(t);
 			}
+		}
+	}
+	
+	//procedimeinto que carga la mejor solucion sin arcos repetidos
+	private void cargarMejorSolucion(Grafo<T> solucionParcial) {
+		this.solucion.clear();
+		Iterator<Arco<T>> i =solucionParcial.obtenerArcos();
+		while(i.hasNext()){
+			Arco<T> a= i.next();
+			Iterator<Arco<T>>j = this.solucion.iterator();
+			boolean encontro=false;
+			while(j.hasNext()&& !encontro) {
+				Arco<T> a2 = j.next();
+				if((a2.getVerticeOrigen()==a.getVerticeDestino() && a2.getVerticeDestino()==a.getVerticeOrigen())) {
+					encontro=true;
+				}
+			}
+			if(!encontro) {
+				this.solucion.add(a);
+			}
+			
 		}
 	}
 }
