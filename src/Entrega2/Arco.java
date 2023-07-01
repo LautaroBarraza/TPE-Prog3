@@ -40,7 +40,7 @@ public class Arco<T> {
 	public boolean equals(Object obj) {
 		try {
 			Arco<T> a2 = (Arco) obj;
-			return ((a2.getVerticeOrigen()==this.getVerticeDestino() && a2.getVerticeDestino()==this.getVerticeOrigen())&& a2.getEtiqueta().equals(this.getEtiqueta())) || ((a2.getVerticeOrigen()==this.getVerticeOrigen() && a2.getVerticeDestino()==this.getVerticeDestino()) && a2.getEtiqueta().equals(this.getEtiqueta()));
+			return ((a2.getVerticeOrigen()==this.getVerticeDestino() && a2.getVerticeDestino()==this.getVerticeOrigen())) || ((a2.getVerticeOrigen()==this.getVerticeOrigen() && a2.getVerticeDestino()==this.getVerticeDestino()) );
 		}catch(Exception e) {
 			return false;
 		}

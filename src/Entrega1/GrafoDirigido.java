@@ -50,8 +50,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
 		// TODO Auto-generated method stub
 		Arco<T> aux = new Arco<T>(verticeId1,verticeId2,etiqueta);
-		this.adjacencyList.get(verticeId1).add(aux);
-		this.cantArcos++;
+		LinkedList<Arco<T>> l =this.adjacencyList.get(verticeId1);
+		if(!l.contains(aux)) {
+			l.add(aux);
+			this.cantArcos++;
+		}
+		
 
 	}
 
