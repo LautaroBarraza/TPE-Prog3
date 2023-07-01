@@ -5,30 +5,32 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class ServicioTunelesBackTraking<T> {
+	LinkedList<Arco<T>> conexiones;
 	LinkedList<Arco<T>> tuneles;
-	LinkedList<Arco<T>> solucion;
 	LinkedList<Integer> estacionConectadas = new LinkedList<Integer>();
 	HashMap<Integer, Boolean> estaciones= new HashMap<Integer,Boolean>();
 	Grafo<T> g;
 	Grafo<T> solucionParcial;
 	int sumaMejor=Integer.MAX_VALUE;
+	int iteraciones;
 	
 	//constructor
 	public ServicioTunelesBackTraking(Grafo<T> g) {
 		this.g=g;
 		this.solucionParcial= new GrafoNoDirigido<T>();
+		this.conexiones= new LinkedList<Arco<T>>();
 		this.tuneles= new LinkedList<Arco<T>>();
-		this.solucion= new LinkedList<Arco<T>>();
 		this.cargarEstaciones();
 		this.cargarGrafo(solucionParcial);
+		this.cargarConexiones();
 	}
 	
 	//metodo publico backTraking
 	
 	public LinkedList<Arco<T>> tunelesBackTraking(){
-		this.cargarTuneles();
+		this.iteraciones=1;
 		this.getTunelesBackTraking(this.solucionParcial);
-		return this.solucion;
+		return this.tuneles;
 	}
 	
 	//metodos privados
@@ -36,8 +38,8 @@ public class ServicioTunelesBackTraking<T> {
 	
 	//backtraking
 	private void getTunelesBackTraking(Grafo<T> solucionParcial) {
-		//System.out.println(solucionParcial);
-		if(this.tuneles.isEmpty()) {
+		
+		if(this.conexiones.isEmpty()) {
 			if(this.isBest(solucionParcial)) {
 				this.cargarMejorSolucion(solucionParcial);
 				
@@ -45,22 +47,24 @@ public class ServicioTunelesBackTraking<T> {
 		}else {
 			//sigo recorriendo el backtraking
 			//opcion de no construir el arco
-			Arco<T> a= this.tuneles.removeFirst();
+			this.iteraciones++;
+			Arco<T> a= this.conexiones.removeFirst();
 			this.getTunelesBackTraking(solucionParcial);
-			this.tuneles.add(a);
+			this.conexiones.addFirst(a);
 			
 			
 			//opcion de construir
-			a= this.tuneles.removeFirst();
+			a= this.conexiones.removeFirst();
 			int o= a.getVerticeOrigen();
 			int d= a.getVerticeDestino();
 			solucionParcial.agregarArco(o, d, a.getEtiqueta());
 			this.getTunelesBackTraking(solucionParcial);
 			solucionParcial.borrarArco(o, d);
-			this.tuneles.add(a);
-
+			this.conexiones.addFirst(a);
+			
 			
 		}
+		
 	}
 	
 	
@@ -72,9 +76,7 @@ public class ServicioTunelesBackTraking<T> {
 			while(i.hasNext()) {
 				suma+= (int) i.next().getEtiqueta();
 			}
-			suma= suma/2;
 			if(suma<this.sumaMejor) {
-				this.sumaMejor=suma;
 				return true;
 			}
 		}
@@ -125,35 +127,36 @@ public class ServicioTunelesBackTraking<T> {
 	}
 
 	
-	//procedimeinto que carga los tuneles entre las estaciones en una linkedList
-	private void cargarTuneles() {
+	//procedimeinto que carga las conexiones entre las estaciones en una linkedList
+	private void cargarConexiones() {
 		Iterator<Arco<T>> i = this.g.obtenerArcos();
 		while(i.hasNext()) {
 			Arco<T> t= i.next();
-			if(!this.tuneles.contains(t)) {
-				this.tuneles.add(t);
-			}
+			this.conexiones.add(t);
 		}
 	}
 	
 	//procedimeinto que carga la mejor solucion sin arcos repetidos
 	private void cargarMejorSolucion(Grafo<T> solucionParcial) {
-		this.solucion.clear();
+		this.tuneles.clear();
+		this.sumaMejor=0;
 		Iterator<Arco<T>> i =solucionParcial.obtenerArcos();
 		while(i.hasNext()){
 			Arco<T> a= i.next();
-			Iterator<Arco<T>>j = this.solucion.iterator();
-			boolean encontro=false;
-			while(j.hasNext()&& !encontro) {
-				Arco<T> a2 = j.next();
-				if((a2.getVerticeOrigen()==a.getVerticeDestino() && a2.getVerticeDestino()==a.getVerticeOrigen())) {
-					encontro=true;
-				}
-			}
-			if(!encontro) {
-				this.solucion.add(a);
-			}
-			
+			this.sumaMejor+=(int) a.getEtiqueta();
+				this.tuneles.add(a);
 		}
+	}
+	
+	public int getIteraciones() {
+		return this.iteraciones;
+	}
+	
+	public void printInforme() {
+		System.out.println("BackTracking");
+		System.out.println(this.tuneles);
+		System.out.println(this.sumaMejor+" Kms");
+		System.out.println(this.getIteraciones()+" iteraciones realizadas");
+		
 	}
 }

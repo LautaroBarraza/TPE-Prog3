@@ -1,5 +1,6 @@
 package Entrega2;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Main {
@@ -7,23 +8,26 @@ public class Main {
 	public static <T> void main(String[] args) {
 		
 		GrafoNoDirigido g = new GrafoNoDirigido();
-		String path = "C:/Users/lautaro/OneDrive/Escritorio/tudai/prog3/repo/programacion3/datasets/dataset1.txt";
+		String path = "dataset/dataset2.txt";
 		CSVReader reader = new CSVReader(path);
 		reader.read(g);
 		ServicioTunelesBackTraking s= new ServicioTunelesBackTraking(g);
-		LinkedList<Arco<T>>so = s.tunelesBackTraking();
-		for (Arco<T> a:so) {
-			System.out.println(a);
-		}
+		s.tunelesBackTraking();
+		s.printInforme();
+		/*Iterator<Arco<T>> i = g.obtenerArcos();
+		while (i.hasNext()) {
+			System.out.println(i.next());
+		}*/
 		
 		//for(LinkedList<Arco<T>> s1: so) {
 			//System.out.println(s1);
 		//}
-		System.out.println(s.sumaMejor);
 		
-		/*
-		ServicioTunelesGreddy s = new ServicioTunelesGreddy(g);
-		s.TunelesGreddy();
-		*/
+		
+		ServicioTunelesGreddy sG = new ServicioTunelesGreddy(g);
+		sG.TunelesGreddy();
+		sG.printInforme();
+		
+		
 	}
 }

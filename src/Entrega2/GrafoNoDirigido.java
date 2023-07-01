@@ -26,7 +26,7 @@ public class GrafoNoDirigido<T> extends GrafoDirigido<T> {
 		return super.existeArco(verticeId1, verticeId2) && super.existeArco(verticeId2, verticeId1);
 	}
 	
-	/*public Iterator<Arco<T>> obtenerArcos(){
+	public Iterator<Arco<T>> obtenerArcos(){
 		LinkedList<Arco<T>>aux= new LinkedList<>();
 		for(Integer key: this.adjacencyList.keySet()) {
 			//obtengo la lista de arcos del vertice
@@ -39,5 +39,5 @@ public class GrafoNoDirigido<T> extends GrafoDirigido<T> {
 			}
 		}
 		return aux.iterator();
-	}*/
+	}
 }

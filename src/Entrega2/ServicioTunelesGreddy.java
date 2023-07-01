@@ -18,15 +18,10 @@ public class ServicioTunelesGreddy<T> {
 	public ServicioTunelesGreddy(Grafo<T>g) {
 		this.grafo=g;
 	}
-	public void TunelesGreddy() {
+	public LinkedList<Arco<T>> TunelesGreddy() {
 		this.guardarArcos();
 		this.guardarVertices();
-		
-		
-		System.out.println("Greddy");
-		System.out.print(this.greddy()); 
-		System.out.println("total -->"+this.calcularTotal()+"KM");
-		System.out.println(this.iteraciones);
+		return this.greddy();
 
 	}
 	
@@ -124,5 +119,12 @@ public class ServicioTunelesGreddy<T> {
 			Arco<T> temp = aux.next();
 			arcos.add(temp);
 		}
+	}
+	
+	public void printInforme() {
+		System.out.println("Greedy");
+		System.out.println(this.solucionArcos);
+		System.out.println(this.calcularTotal()+" Kms");
+		System.out.println(this.iteraciones+" iteraciones realizadas");
 	}
 }

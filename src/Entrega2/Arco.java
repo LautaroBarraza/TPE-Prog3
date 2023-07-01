@@ -34,19 +34,18 @@ public class Arco<T> {
 	}
 
 	public String toString() {
-        return "Tunel [" + verticeOrigen + "-->" + verticeDestino + "-->" + etiqueta
-                + "KM]";
+        return verticeOrigen + "-" + verticeDestino;
     }
 	
-	/*public boolean equals(Object obj) {
+	public boolean equals(Object obj) {
 		try {
 			Arco<T> a2 = (Arco) obj;
-			return ((a2.getVerticeOrigen()==this.getVerticeDestino() && a2.getVerticeDestino()==this.getVerticeOrigen())&& a2.getEtiqueta().equals(this.getEtiqueta())) || ((a2.getVerticeOrigen()==this.getVerticeOrigen() && a2.getVerticeDestino()==this.getVerticeDestino())&& a2.getEtiqueta().equals(this.getEtiqueta()));
+			return ((a2.getVerticeOrigen()==this.getVerticeDestino() && a2.getVerticeDestino()==this.getVerticeOrigen())&& a2.getEtiqueta().equals(this.getEtiqueta())) || ((a2.getVerticeOrigen()==this.getVerticeOrigen() && a2.getVerticeDestino()==this.getVerticeDestino()) && a2.getEtiqueta().equals(this.getEtiqueta()));
 		}catch(Exception e) {
 			return false;
 		}
 		
-	}*/
+	}
 	
 	
 
