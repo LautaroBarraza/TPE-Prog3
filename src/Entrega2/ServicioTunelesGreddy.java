@@ -18,6 +18,8 @@ public class ServicioTunelesGreddy<T> {
 	public ServicioTunelesGreddy(Grafo<T>g) {
 		this.grafo=g;
 	}
+	
+	
 	public LinkedList<Arco<T>> TunelesGreddy() {
 		this.guardarArcos();
 		this.guardarVertices();
@@ -25,9 +27,10 @@ public class ServicioTunelesGreddy<T> {
 
 	}
 	
+	
 	private LinkedList<Arco<T>> greddy() {
 		this.iteraciones = 0;
-		while(!this.arcos.isEmpty() && esSolucion()) {
+		while(!this.arcos.isEmpty() && !esSolucion()) {
 			this.iteraciones+= 1;
 			Arco<T> u = SeleccionarArco();
 			if(u!=null) {
@@ -44,17 +47,24 @@ public class ServicioTunelesGreddy<T> {
 		return this.solucionArcos;
 	}
 	
+	
+	//funcion que verifica que todos las estaciones esten en el mismo sub conjunto
 	private Boolean esSolucion() {
-		boolean resultado = true;
-		Iterator<Integer> i = this.grafo.obtenerVertices();
-		while(i.hasNext()) {
-			Integer temp = i.next();
-			if(!this.unionFind.containsKey(temp)) {
-				resultado = false;
-			}
-		}
-		return resultado;
-	}
+        boolean resultado = true;
+        Iterator<Integer> i = this.grafo.obtenerVertices();
+        Integer temp = i.next();
+        int nroConjunto = this.find(temp);
+        while(i.hasNext()) {
+            temp = i.next();
+            int x = this.find(temp);
+            if(x!=nroConjunto) {
+                return false;
+            }
+        }
+        return resultado;
+    }
+	
+	
 	private Integer find(Integer k) {
 		//si "k" es root
 		if(this.unionFind.get(k)==k) {
@@ -63,6 +73,8 @@ public class ServicioTunelesGreddy<T> {
 		//recurre para el padre hasta que encontramos raiz
 		return find(this.unionFind.get(k));
 	}
+	
+	
 	public void union(Integer a,Integer b) {
 		// encontrar la raíz de los conjuntos a los que pertenecen los elementos `x` e `y`
         int x = find(a);
@@ -72,6 +84,8 @@ public class ServicioTunelesGreddy<T> {
 
         
 	}
+	
+	
 	private Arco<T> SeleccionarArco() {
 		Integer menor=Integer.MAX_VALUE;
 		Arco<T> key=null;
