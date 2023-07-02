@@ -17,7 +17,8 @@ public class CSVReader {
 		this.path = path;
 	}
 	
-	public void read(GrafoNoDirigido g) {
+	public GrafoNoDirigido read() {
+		GrafoNoDirigido g= new GrafoNoDirigido();
 		// Obtengo una lista con las lineas del archivo
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
@@ -38,6 +39,7 @@ public class CSVReader {
 			}
 			g.agregarArco(origen, destino, etiqueta);
 		}
+		return g;
 	}
 
 	private ArrayList<String[]> readContent() {
